@@ -3,26 +3,40 @@
 
 local M = {}
 
-function M.setup()
+-- Default config
+M.config = {
+  -- Available styles:
+  -- Dark:  "midnight" | "dusk" | "twilight" | "ember"
+  -- Light: "dawn"
+  style = "midnight",
+}
+
+function M.setup(opts)
+  M.config = vim.tbl_extend("force", M.config, opts or {})
+
   local palette = require("cool_lightning.palette")
   local highlights = require("cool_lightning.highlights")
-  local c = palette.colors
+  local c = palette.get(M.config.style)
+
+  -- Set background type so Neovim knows light vs dark
+  if M.config.style == "dawn" then
+    vim.opt.background = "light"
+  else
+    vim.opt.background = "dark"
+  end
 
   -- Apply all highlight groups
   highlights.setup(c)
 
   -- ── Macro highlights for C/C++ ────────────────────────────────────────────
-  -- Applied via LspTokenUpdate to split macros into semantic categories
-  -- based on treesitter context, at higher priority than @lsp.type.macro.
   local function set_macro_highlights()
-    vim.api.nvim_set_hl(0, "MacroFunction", { fg = c.green })    -- function-like: NVIC_SetPriority
-    vim.api.nvim_set_hl(0, "MacroStruct",   { fg = c.fg })       -- struct/register: SysTick (plain fg)
-    vim.api.nvim_set_hl(0, "MacroObject",   { fg = c.blue })     -- value/constant: SysTick_CTRL_CLKSOURCE_Msk
+    vim.api.nvim_set_hl(0, "MacroFunction", { fg = c.green })
+    vim.api.nvim_set_hl(0, "MacroStruct",   { fg = c.fg })
+    vim.api.nvim_set_hl(0, "MacroObject",   { fg = c.blue })
   end
 
   set_macro_highlights()
 
-  -- Reapply after any colorscheme reload
   vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "cool_lightning",
     callback = set_macro_highlights,
@@ -61,7 +75,7 @@ function M.setup()
     end,
   })
 
-  -- Set terminal colors
+  -- Terminal colors
   vim.g.terminal_color_0  = c.bg
   vim.g.terminal_color_1  = c.red
   vim.g.terminal_color_2  = c.green

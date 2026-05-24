@@ -2,11 +2,21 @@
 
 A dark Neovim colorscheme inspired by Monokai Soda and Tokyo Night Night, tuned for embedded C / firmware development.
 
+## Styles
+
+| Style | Background | Feel |
+|---|---|---|
+| `midnight` | `#0d000d` | Deep purple-black (default) |
+| `dusk` | `#16101e` | Warm dark purple |
+| `twilight` | `#1a1b26` | Cool blue-dark |
+| `ember` | `#222436` | Softer blue-dark, lighter |
+| `dawn` | `#f5f5f0` | Warm white, light background |
+
 ## Philosophy
 
 Colors are assigned by **semantic category**, not just syntax role:
 
-| Category | Color | Examples |
+| Category | Color (dark) | Examples |
 |---|---|---|
 | Named constants | `#0db9d7` cyan-blue | `#define` macros, enum members |
 | Storage modifiers | `#f5d070` warm gold | `static`, `const`, `volatile`, `extern` |
@@ -26,9 +36,10 @@ Colors are assigned by **semantic category**, not just syntax role:
 
 ## Features
 
+- 5 style variants (4 dark + 1 light)
 - Full treesitter highlight support
 - LSP semantic token support
-- Smart C/C++ macro splitting via `LspTokenUpdate` — function-like, struct-access, and value macros get distinct colors
+- Smart C/C++ macro splitting via `LspTokenUpdate`
 - Terminal colors
 - Plugin support: Telescope, nvim-cmp, gitsigns, which-key, nvim-tree, indent-blankline, nvim-notify
 
@@ -39,28 +50,17 @@ Colors are assigned by **semantic category**, not just syntax role:
 
 ## Installation
 
-### lazy.nvim (local)
+### lazy.nvim
 
 ```lua
 {
-  dir = "~/cool_lightning.nvim",
-  name = "cool_lightning",
+  "cdmeister/cool_lightning",
   lazy = false,
   priority = 1000,
   config = function()
-    vim.cmd.colorscheme("cool_lightning")
-  end,
-}
-```
-
-### lazy.nvim (GitHub)
-
-```lua
-{
-  "yourusername/cool_lightning.nvim",
-  lazy = false,
-  priority = 1000,
-  config = function()
+    require("cool_lightning").setup({
+      style = "midnight",  -- "midnight" | "dusk" | "twilight" | "ember" | "dawn"
+    })
     vim.cmd.colorscheme("cool_lightning")
   end,
 }
@@ -68,59 +68,39 @@ Colors are assigned by **semantic category**, not just syntax role:
 
 ### Manual
 
-Copy the `colors/` and `lua/` directories into your Neovim config directory (`~/.config/nvim/`), then add to your `init.lua`:
+Copy the `colors/` and `lua/` directories into `~/.config/nvim/`, then:
 
 ```lua
+require("cool_lightning").setup({ style = "midnight" })
 vim.cmd.colorscheme("cool_lightning")
 ```
 
 ## C/C++ Macro Highlighting
 
-Cool Lightning uses `LspTokenUpdate` to split macros into three semantic categories based on treesitter context. This requires clangd with a valid `compile_commands.json` or `compile_flags.txt` at your project root.
+Cool Lightning uses `LspTokenUpdate` to split macros into three semantic categories:
 
-For embedded ARM projects, add `--query-driver` to your clangd configuration to resolve ARM toolchain headers:
+- **MacroFunction** — function-like macros (`NVIC_SetPriority`) → green
+- **MacroStruct** — struct/register macros (`SysTick->CTRL`) → plain fg
+- **MacroObject** — value/constant macros (`GPIO_MODE_INPUT`) → blue
+
+Requires clangd with a valid `compile_commands.json`. For embedded ARM projects add `--query-driver`:
 
 ```lua
--- In your lspconfig setup
 vim.lsp.config("clangd", {
   cmd = {
     "clangd",
     "--query-driver=/path/to/arm-none-eabi-gcc",
-    -- ... other flags
   },
 })
 ```
 
-## Palette
-
-```lua
-bg         = "#0d000d"   -- deep purple-black
-fg         = "#c4c4b5"   -- warm off-white
-gypsum     = "#e8e4dc"   -- variables and primitives
-keyword    = "#8b6fe8"   -- violet
-red        = "#ff3a7e"   -- errors
-orange     = "#ffaf5f"   -- type builtins
-modifier   = "#f5d070"   -- storage modifiers
-string     = "#9ece6a"   -- strings
-green      = "#a8d96a"   -- functions
-blue       = "#0db9d7"   -- macros, constants
-param      = "#c792ea"   -- parameters
-purple     = "#b282fe"   -- numbers
-teal       = "#4db8a0"   -- struct types
-teal_type  = "#9ddec9"   -- typedef handles
-type_stdlib = "#ff8fa3"  -- stdlib typedefs
-comment    = "#9dbdd4"   -- comments
-```
-
 ## Customization
 
-Colors are defined in `lua/cool_lightning/palette.lua`. Edit the `M.colors` table and run `:colorscheme cool_lightning` to reload.
-
-Swap comments are left throughout `highlights.lua` for common tweaks:
+Edit `lua/cool_lightning/palette.lua` to tweak colors. Swap comments are left in `highlights.lua`:
 
 - `@type.builtin` — swap gypsum for coral-pink to unify all type annotations
 - `@lsp.type.enumMember` — swap blue for purple to distinguish enum members from macros
-- `@lsp.type.type` — swap `teal_type` for `teal` to unify all struct-backed types
+- `@lsp.type.type` — swap `teal_type` for `teal` to unify struct-backed types
 - `@lsp.typemod.type.defaultLibrary` — swap coral-pink for `teal_type` for stdlib typedefs
 
 ## License
