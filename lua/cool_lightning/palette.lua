@@ -7,10 +7,10 @@
 -- red             #ff3a7e   errors, diagnostics
 -- orange          #ffaf5f   type builtins, warnings
 -- modifier        #f5d070   static/const/volatile/extern (warm gold)
--- string          #9ece6a   strings
--- green           #a8d96a   functions
--- green_dim       #80c060   methods
 -- blue            #0db9d7   macros, enum members, named constants, operators
+-- string          #6dd4f0   strings
+-- green           #8adc58   functions
+-- green_dim       #6ec048   methods
 -- param           #c792ea   function parameters
 -- purple          #b282fe   numbers, pure constants
 -- teal            #4db8a0   struct/class types

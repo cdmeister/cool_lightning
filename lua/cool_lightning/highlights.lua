@@ -16,7 +16,7 @@ function M.setup(c)
     CursorLineNr   = { fg = c.keyword,  bold = true },
     LineNr         = { fg = c.fg_muted },
     SignColumn     = { fg = c.fg_muted, bg = c.bg },
-    ColorColumn    = { bg = "#3a0f0f" },
+    ColorColumn    = { bg = "#4a1515" },
     Folded         = { fg = c.fg_dim,   bg = c.bg_subtle },
     FoldColumn     = { fg = c.fg_muted },
     MatchParen     = { fg = c.modifier, bold = true, underline = true },
@@ -155,6 +155,10 @@ function M.setup(c)
     ["@keyword.operator"]           = { fg = c.keyword },
     ["@keyword.import"]             = { fg = c.keyword,    italic = true },
     ["@keyword.type"]               = { fg = c.teal_type,  italic = true },
+    -- Custom subcategories via queries/c/highlights.scm and queries/cpp/highlights.scm
+    ["@keyword.typedef"]            = { fg = "#e8e4dc",    italic = true },  -- gypsum: neutral
+    ["@keyword.struct"]             = { fg = c.teal,       italic = true },  -- teal: struct/union/class
+    ["@keyword.enum"]               = { fg = c.teal_type,  italic = true },  -- mint: enum
     ["@keyword.modifier"]           = { fg = c.modifier,   italic = true },
     ["@keyword.repeat"]             = { fg = c.keyword,    italic = true },
     ["@keyword.return"]             = { fg = c.keyword,    italic = true },
