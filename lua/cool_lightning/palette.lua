@@ -7,16 +7,16 @@
 -- red             #ff3a7e   errors, diagnostics
 -- orange          #ffaf5f   type builtins, warnings
 -- modifier        #f5d070   static/const/volatile/extern (warm gold)
--- string          #9ece6a   strings
--- green           #a8d96a   functions
--- green_dim       #80c060   methods
+-- string          #6dd4f0   strings (light cyan)
+-- green           #8adc58   functions
+-- green_dim       #6ec048   methods
 -- blue            #0db9d7   macros, enum members, named constants, operators
 -- param           #c792ea   function parameters
 -- purple          #b282fe   numbers, pure constants
 -- teal            #4db8a0   struct/class types
 -- teal_type       #9ddec9   typedef handles
 -- type_stdlib     #ff8fa3   stdlib typedefs coral-pink
--- comment         #9dbdd4   comments
+-- comment         #a8a8d0   comments
 -- ─────────────────────────────────────────────────────────────────────────────
 
 local M = {}
@@ -31,9 +31,9 @@ local syntax = {
   red        = "#ff3a7e",
   orange     = "#ffaf5f",
   modifier   = "#f5d070",
-  string     = "#9ece6a",
-  green      = "#a8d96a",
-  green_dim  = "#80c060",
+  string     = "#6dd4f0",
+  green      = "#8adc58",
+  green_dim  = "#6ec048",
   blue       = "#0db9d7",
   blue_dim   = "#0a9ab5",
   cyan       = "#7dcfff",
@@ -43,7 +43,7 @@ local syntax = {
   teal       = "#4db8a0",
   teal_type  = "#9ddec9",
   type_stdlib = "#ff8fa3",
-  comment    = "#9dbdd4",
+  comment    = "#a8a8d0",
   border_hl  = "#27a1b9",
   error      = "#ff3a7e",
   warn       = "#ffaf5f",
@@ -54,14 +54,14 @@ local syntax = {
 local variants = {
   -- ── Dark variants ─────────────────────────────────────────────────────────
 
-  -- midnight: deep purple-black (original Cool Lightning)
+  -- midnight: pure black background
   midnight = vim.tbl_extend("force", syntax, {
-    bg         = "#0d000d",
-    bg_dark    = "#080008",
-    bg_float   = "#111128",
+    bg         = "#000000",
+    bg_dark    = "#000000",
+    bg_float   = "#0e0e22",
     bg_sel     = "#2d3566",
-    bg_subtle  = "#16162a",
-    bg_subtle2 = "#1e1e36",
+    bg_subtle  = "#0f0f1e",
+    bg_subtle2 = "#141428",
     border     = "#2a2a4a",
   }),
 
@@ -114,29 +114,29 @@ local variants = {
     border_hl  = "#0a8faa",
 
     -- Foregrounds
-    fg         = "#2a2a35",   -- dark blue-black for readability
+    fg         = "#2a2a35",
     fg_dim     = "#5a5a75",
     fg_muted   = "#8888a0",
-    gypsum     = "#3a3a4a",   -- darker on light bg
+    gypsum     = "#3a3a4a",
 
     -- Syntax — saturated/darkened for light bg contrast
-    keyword    = "#6050d0",   -- darker violet
-    red        = "#d0004a",   -- deeper red
-    orange     = "#b06000",   -- darker orange
-    modifier   = "#8a6800",   -- darker gold
-    string     = "#3a8a20",   -- darker green
-    green      = "#2a8a30",   -- darker function green
+    keyword    = "#6050d0",
+    red        = "#d0004a",
+    orange     = "#b06000",
+    modifier   = "#8a6800",
+    string     = "#3a8a20",
+    green      = "#2a8a30",
     green_dim  = "#3a7a20",
-    blue       = "#0088aa",   -- darker cyan-blue
+    blue       = "#0088aa",
     blue_dim   = "#006888",
     cyan       = "#0070a0",
-    param      = "#8040b0",   -- darker purple-pink
-    purple     = "#7040c0",   -- darker purple
+    param      = "#8040b0",
+    purple     = "#7040c0",
     purple_dim = "#604090",
-    teal       = "#207860",   -- darker teal
-    teal_type  = "#308878",   -- darker mint
-    type_stdlib = "#c04060",  -- darker coral
-    comment    = "#6080a0",   -- muted blue-gray
+    teal       = "#207860",
+    teal_type  = "#308878",
+    type_stdlib = "#c04060",
+    comment    = "#6080a0",
 
     -- Diagnostics
     error      = "#d0004a",
