@@ -16,7 +16,7 @@
 -- teal            #4db8a0   struct/class types
 -- teal_type       #9ddec9   typedef handles
 -- type_stdlib     #ff8fa3   stdlib typedefs coral-pink
--- comment         #9dbdd4   comments
+-- comment         #a8a8d0   comments
 -- ─────────────────────────────────────────────────────────────────────────────
 
 local M = {}
@@ -43,7 +43,7 @@ local syntax = {
   teal       = "#4db8a0",
   teal_type  = "#9ddec9",
   type_stdlib = "#ff8fa3",
-  comment    = "#9090c0",
+  comment    = "#a8a8d0",
   border_hl  = "#27a1b9",
   error      = "#ff3a7e",
   warn       = "#ffaf5f",
@@ -56,12 +56,12 @@ local variants = {
 
   -- midnight: deep purple-black (original Cool Lightning)
   midnight = vim.tbl_extend("force", syntax, {
-    bg         = "#0d000d",
-    bg_dark    = "#080008",
-    bg_float   = "#111128",
+    bg         = "#000000",
+    bg_dark    = "#000000",
+    bg_float   = "#0e0e22",
     bg_sel     = "#2d3566",
-    bg_subtle  = "#16162a",
-    bg_subtle2 = "#1e1e36",
+    bg_subtle  = "#0f0f1e",
+    bg_subtle2 = "#141428",
     border     = "#2a2a4a",
   }),
 

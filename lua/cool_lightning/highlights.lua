@@ -16,7 +16,7 @@ function M.setup(c)
     CursorLineNr   = { fg = c.keyword,  bold = true },
     LineNr         = { fg = c.fg_muted },
     SignColumn     = { fg = c.fg_muted, bg = c.bg },
-    ColorColumn    = { bg = "#4a1515" },
+    ColorColumn    = { bg = "#3a0f0f" },
     Folded         = { fg = c.fg_dim,   bg = c.bg_subtle },
     FoldColumn     = { fg = c.fg_muted },
     MatchParen     = { fg = c.modifier, bold = true, underline = true },
