@@ -7,16 +7,16 @@
 -- red             #ff3a7e   errors, diagnostics
 -- orange          #ffaf5f   type builtins, warnings
 -- modifier        #f5d070   static/const/volatile/extern (warm gold)
+-- string          #9ece6a   strings
+-- green           #a8d96a   functions
+-- green_dim       #80c060   methods
 -- blue            #0db9d7   macros, enum members, named constants, operators
--- string          #6dd4f0   strings
--- green           #8adc58   functions
--- green_dim       #6ec048   methods
 -- param           #c792ea   function parameters
 -- purple          #b282fe   numbers, pure constants
 -- teal            #4db8a0   struct/class types
 -- teal_type       #9ddec9   typedef handles
 -- type_stdlib     #ff8fa3   stdlib typedefs coral-pink
--- comment         #a8a8d0   comments
+-- comment         #9dbdd4   comments
 -- ─────────────────────────────────────────────────────────────────────────────
 
 local M = {}
@@ -31,9 +31,9 @@ local syntax = {
   red        = "#ff3a7e",
   orange     = "#ffaf5f",
   modifier   = "#f5d070",
-  string     = "#6dd4f0",
-  green      = "#8adc58",
-  green_dim  = "#6ec048",
+  string     = "#9ece6a",
+  green      = "#a8d96a",
+  green_dim  = "#80c060",
   blue       = "#0db9d7",
   blue_dim   = "#0a9ab5",
   cyan       = "#7dcfff",
@@ -43,7 +43,7 @@ local syntax = {
   teal       = "#4db8a0",
   teal_type  = "#9ddec9",
   type_stdlib = "#ff8fa3",
-  comment    = "#a8a8d0",
+  comment    = "#9dbdd4",
   border_hl  = "#27a1b9",
   error      = "#ff3a7e",
   warn       = "#ffaf5f",
@@ -56,12 +56,12 @@ local variants = {
 
   -- midnight: deep purple-black (original Cool Lightning)
   midnight = vim.tbl_extend("force", syntax, {
-    bg         = "#000000",
-    bg_dark    = "#000000",
-    bg_float   = "#0e0e22",
+    bg         = "#0d000d",
+    bg_dark    = "#080008",
+    bg_float   = "#111128",
     bg_sel     = "#2d3566",
-    bg_subtle  = "#0f0f1e",
-    bg_subtle2 = "#141428",
+    bg_subtle  = "#16162a",
+    bg_subtle2 = "#1e1e36",
     border     = "#2a2a4a",
   }),
 

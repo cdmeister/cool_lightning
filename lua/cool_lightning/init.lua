@@ -11,6 +11,38 @@ M.config = {
   style = "midnight",
 }
 
+-- ── Query management ──────────────────────────────────────────────────────────
+-- Custom treesitter queries live in lua/cool_lightning/queries/ (non-standard
+-- path) so they don't auto-load and affect other colorschemes. They are added
+-- to runtimepath only when cool_lightning is active.
+
+local function get_query_path()
+  local files = vim.api.nvim_get_runtime_file("lua/cool_lightning/init.lua", false)
+  if files and files[1] then
+    -- Go up from lua/cool_lightning/ to plugin root, then into our queries dir
+    return vim.fn.fnamemodify(files[1], ":h") .. "/queries"
+  end
+  return nil
+end
+
+local function apply_queries()
+  local path = get_query_path()
+  if path and vim.fn.isdirectory(path) == 1 then
+    vim.opt.runtimepath:append(path)
+  end
+end
+
+local function remove_queries()
+  local path = get_query_path()
+  if path then
+    vim.opt.runtimepath:remove(path)
+  end
+  -- Clear custom groups so other themes aren't affected
+  vim.api.nvim_set_hl(0, "@keyword.typedef", {})
+  vim.api.nvim_set_hl(0, "@keyword.struct",  {})
+  vim.api.nvim_set_hl(0, "@keyword.enum",    {})
+end
+
 function M.setup(opts)
   M.config = vim.tbl_extend("force", M.config, opts or {})
 
@@ -28,6 +60,9 @@ function M.setup(opts)
   -- Apply all highlight groups
   highlights.setup(c)
 
+  -- Apply custom treesitter queries
+  apply_queries()
+
   -- ── Macro highlights for C/C++ ────────────────────────────────────────────
   local function set_macro_highlights()
     vim.api.nvim_set_hl(0, "MacroFunction", { fg = c.green })
@@ -37,14 +72,28 @@ function M.setup(opts)
 
   set_macro_highlights()
 
+  -- Watch for colorscheme changes
   vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "cool_lightning",
-    callback = set_macro_highlights,
+    callback = function(args)
+      if args.match:find("cool_lightning") then
+        -- Reapply when switching between cool_lightning variants
+        apply_queries()
+        set_macro_highlights()
+      else
+        -- Remove when switching to another theme
+        remove_queries()
+      end
+    end,
   })
 
   -- Split macro coloring based on treesitter context
   vim.api.nvim_create_autocmd("LspTokenUpdate", {
     callback = function(args)
+      -- Only run when cool_lightning is active
+      if not vim.g.colors_name or not vim.g.colors_name:find("cool_lightning") then
+        return
+      end
+
       local ft = vim.bo[args.buf].filetype
       if ft ~= "c" and ft ~= "cpp" then return end
 
