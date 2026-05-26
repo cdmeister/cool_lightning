@@ -176,6 +176,8 @@ function M.setup(c)
     ["@type.builtin"]               = { fg = "#e8e4dc",    italic = true },
     ["@type.definition"]            = { fg = c.teal_type },
     ["@type.qualifier"]             = { fg = c.modifier,   italic = true },
+    -- Custom: function pointer typedef names via queries/c/highlights.scm
+    ["@type.function_ptr"]          = { fg = c.func_ptr,   italic = true },
 
     -- ── Treesitter — attributes ───────────────────────────────────────────
     ["@attribute"]                  = { fg = c.blue },

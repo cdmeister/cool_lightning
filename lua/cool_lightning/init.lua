@@ -18,10 +18,13 @@ local custom_groups = {
   "MacroFunction",
   "MacroStruct",
   "MacroObject",
+  "FunctionPtrTypedef",
   -- Keyword type splits (from queries/)
   "@keyword.typedef",
   "@keyword.struct",
   "@keyword.enum",
+  -- Function pointer typedefs (from queries/)
+  "@type.function_ptr",
 }
 
 local function clear_custom_groups()
@@ -49,9 +52,10 @@ function M.setup(opts)
 
   -- ── Macro highlights for C/C++ ────────────────────────────────────────────
   local function set_macro_highlights()
-    vim.api.nvim_set_hl(0, "MacroFunction", { fg = c.green })
-    vim.api.nvim_set_hl(0, "MacroStruct",   { fg = c.fg })
-    vim.api.nvim_set_hl(0, "MacroObject",   { fg = c.blue })
+    vim.api.nvim_set_hl(0, "MacroFunction",     { fg = c.green })
+    vim.api.nvim_set_hl(0, "MacroStruct",       { fg = c.fg })
+    vim.api.nvim_set_hl(0, "MacroObject",       { fg = c.blue })
+    vim.api.nvim_set_hl(0, "FunctionPtrTypedef", { fg = c.func_ptr, italic = true })
   end
 
   set_macro_highlights()
@@ -83,6 +87,28 @@ function M.setup(opts)
       if ft ~= "c" and ft ~= "cpp" then return end
 
       local token = args.data.token
+
+      -- Function pointer typedef detection
+      if token.type == "type" then
+        local node = vim.treesitter.get_node({
+          bufnr = args.buf,
+          pos = { token.line, token.start_col },
+        })
+        local parent = node and node:parent()
+        local grandparent = parent and parent:parent()
+        local great = grandparent and grandparent:parent()
+        local great_great = great and great:parent()
+        if parent and parent:type() == "pointer_declarator"
+          and grandparent and grandparent:type() == "parenthesized_declarator"
+          and great and great:type() == "function_declarator"
+          and great_great and great_great:type() == "type_definition" then
+          vim.lsp.semantic_tokens.highlight_token(
+            token, args.buf, args.data.client_id, "FunctionPtrTypedef")
+          return
+        end
+      end
+
+      -- Macro splitting
       if token.type ~= "macro" then return end
 
       local node = vim.treesitter.get_node({

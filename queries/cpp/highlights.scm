@@ -14,3 +14,10 @@
 
 ; class → teal (same category as struct)
 "class" @keyword.struct
+
+; Function pointer typedef names
+(type_definition
+  declarator: (function_declarator
+    declarator: (parenthesized_declarator
+      (pointer_declarator
+        declarator: (type_identifier) @type.function_ptr))))

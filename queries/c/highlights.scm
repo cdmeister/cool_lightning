@@ -11,3 +11,10 @@
 
 ; enum → mint (value type, named constants)
 "enum" @keyword.enum
+
+; Function pointer typedef names
+(type_definition
+  declarator: (function_declarator
+    declarator: (parenthesized_declarator
+      (pointer_declarator
+        declarator: (type_identifier) @type.function_ptr))))

@@ -10,6 +10,7 @@
 -- string          #6dd4f0   strings (light cyan)
 -- green           #8adc58   functions
 -- green_dim       #6ec048   methods
+-- func_ptr        #50c878   function pointer typedefs
 -- blue            #0db9d7   macros, enum members, named constants, operators
 -- param           #c792ea   function parameters
 -- purple          #b282fe   numbers, pure constants
@@ -34,6 +35,7 @@ local syntax = {
   string     = "#6dd4f0",
   green      = "#8adc58",
   green_dim  = "#6ec048",
+  func_ptr   = "#50c878",   -- function pointer typedefs
   blue       = "#0db9d7",
   blue_dim   = "#0a9ab5",
   cyan       = "#7dcfff",
